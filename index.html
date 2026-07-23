@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OCC Rewards Card | Spend. Earn. Build.</title>
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #141416;
+      --text: #f5f5f7;
+      --muted: #a1a1a6;
+      --accent: #d4af37;
+      --accent-soft: rgba(212, 175, 55, 0.15);
+      --green: #34c759;
+      --border: #2a2a2e;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,11,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 32px; font-size: 0.95rem; color: var(--muted); }
+    .nav-links a:hover { color: var(--text); }
+    .cta-btn {
+      background: var(--accent); color: #000; font-weight: 600;
+      padding: 10px 20px; border-radius: 980px; font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+    .cta-btn:hover { opacity: 0.9; }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 16px;
+    }
+    .hero .tagline {
+      font-size: 1.35rem; color: var(--muted);
+      max-width: 520px; margin: 0 auto 32px;
+    }
+    .hero-benefits {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 24px;
+      margin-bottom: 40px; font-size: 0.95rem; color: var(--text);
+    }
+    .hero-benefits span::before {
+      content: "✓ "; color: var(--green); font-weight: 700;
+    }
+    .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent); color: #000; font-weight: 600;
+      padding: 16px 32px; border-radius: 980px; font-size: 1.05rem;
+    }
+    .btn-secondary {
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text); font-weight: 500;
+      padding: 16px 32px; border-radius: 980px; font-size: 1.05rem;
+    }
+    .btn-secondary:hover { border-color: var(--muted); }
+
+    /* Card visual */
+    .card-showcase {
+      margin: 48px auto 0; max-width: 420px;
+      position: relative;
+    }
+    .card {
+      background: linear-gradient(145deg, #1c1c1e 0%, #2c2c2e 100%);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      border: 1px solid rgba(212,175,55,0.25);
+      aspect-ratio: 1.586;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(212,175,55,0.15), transparent 50%);
+    }
+    .card-chip {
+      width: 42px; height: 32px; border-radius: 6px;
+      background: linear-gradient(135deg, #d4af37, #f0d78c);
+      opacity: 0.9;
+    }
+    .card-logo { font-weight: 700; font-size: 1.1rem; letter-spacing: 0.05em; }
+    .card-logo span { color: var(--accent); }
+    .card-number { font-family: monospace; font-size: 1.15rem; letter-spacing: 0.15em; opacity: 0.9; }
+    .card-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+    .card-name { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.8; }
+    .card-network { font-size: 0.9rem; font-weight: 600; opacity: 0.85; }
+
+    /* Benefits grid */
+    .section { padding: 80px 0; }
+    .section-title {
+      text-align: center; font-size: 2rem; font-weight: 700;
+      letter-spacing: -0.02em; margin-bottom: 12px;
+    }
+    .section-sub {
+      text-align: center; color: var(--muted); max-width: 520px;
+      margin: 0 auto 48px; font-size: 1.1rem;
+    }
+    .benefits-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .benefit-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      transition: border-color 0.2s;
+    }
+    .benefit-card:hover { border-color: rgba(212,175,55,0.4); }
+    .benefit-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--accent-soft); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; margin-bottom: 16px;
+    }
+    .benefit-card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+    .benefit-card p { color: var(--muted); font-size: 0.95rem; }
+
+    /* How it works */
+    .steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px; text-align: center;
+    }
+    .step-num {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--accent); color: #000; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px; font-size: 1.2rem;
+    }
+
+    /* Trust / Partners */
+    .trust-bar {
+      background: var(--surface); border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); padding: 40px 0;
+      text-align: center;
+    }
+    .trust-bar p { color: var(--muted); font-size: 0.95rem; margin-bottom: 16px; }
+    .partners { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; opacity: 0.7; font-weight: 500; }
+
+    /* Footer */
+    footer {
+      padding: 60px 0 40px; border-top: 1px solid var(--border);
+      color: var(--muted); font-size: 0.9rem;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 40px;
+    }
+    .footer-grid h4 { color: var(--text); margin-bottom: 16px; font-size: 0.95rem; }
+    .footer-grid a { display: block; margin-bottom: 10px; }
+    .footer-grid a:hover { color: var(--text); }
+    .disclaimer {
+      font-size: 0.8rem; line-height: 1.6; max-width: 820px;
+      border-top: 1px solid var(--border); padding-top: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .hero { padding: 48px 0 40px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="logo">OCC <span>Rewards</span></div>
+      <nav class="nav-links">
+        <a href="#card">The Card</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#how">How it works</a>
+        <a href="#network">Network</a>
+      </nav>
+      <a href="#apply" class="cta-btn">Request Information</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="card">
+    <div class="container">
+      <h1>OCC Rewards Card</h1>
+      <p class="tagline">Spend. Earn. Build your financial future.</p>
+      <div class="hero-benefits">
+        <span>Accessible eligibility path</span>
+        <span>Designed for cash rewards</span>
+        <span>Virtual card capability</span>
+        <span>Modern financial tools</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#apply" class="btn-primary">Request Information</a>
+        <a href="#how" class="btn-secondary">See how it works</a>
+      </div>
+
+      <!-- Large card visual -->
+      <div class="card-showcase">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div class="card-chip"></div>
+            <div class="card-logo">OCC <span>Rewards</span></div>
+          </div>
+          <div class="card-number">•••• •••• •••• 4829</div>
+          <div class="card-bottom">
+            <div>
+              <div class="card-name">CARDHOLDER</div>
+              <div style="font-size:0.75rem;opacity:0.6;margin-top:4px;">VALID THRU 12/29</div>
+            </div>
+            <div class="card-network">Network Partner</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="section" id="benefits">
+    <div class="container">
+      <h2 class="section-title">What you get</h2>
+      <p class="section-sub">Everything revolves around one powerful card and one simple experience — designed for everyday use.</p>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">💳</div>
+          <h3>Spend anywhere</h3>
+          <p>Use the OCC Rewards Card online and in-store. Virtual card access is designed to be available shortly after approval under the program terms.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">💰</div>
+          <h3>Earn real cash</h3>
+          <p>Cash rewards on everyday purchases. Transparent structure, no points games, and clear redemption once the program is live.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">📈</div>
+          <h3>Build credit</h3>
+          <p>Responsible use is intended to help establish and grow credit history where the issuing program reports to credit bureaus.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">⚡</div>
+          <h3>Accessible & simple</h3>
+          <p>Designed to provide an accessible eligibility path, subject to program terms and approval. Fast decision process is a core design goal.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🌐</div>
+          <h3>Cross-border ready</h3>
+          <p>Built for modern money movement. Stablecoin and multi-currency capabilities are planned via the OCC network once partners are in place.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🔒</div>
+          <h3>You're in control</h3>
+          <p>Freeze, unfreeze, set limits, and track every transaction in the app. Your money, your rules — once the program is active.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section" id="how" style="background: var(--surface);">
+    <div class="container">
+      <h2 class="section-title">Four simple steps</h2>
+      <p class="section-sub">From interest to everyday use — designed for speed and clarity.</p>
+      <div class="steps">
+        <div>
+          <div class="step-num">1</div>
+          <h3>Request Information</h3>
+          <p style="color:var(--muted);font-size:0.95rem;margin-top:8px;">Express interest. We will share updates when the program opens under partner bank sponsorship.</p>
+        </div>
+        <div>
+          <div class="step-num">2</div>
+          <h3>Apply & Approval</h3>
+          <p style="color:var(--muted);font-size:0.95rem;margin-top:8px;">Complete a streamlined application. Eligibility and decisioning follow the final program rules.</p>
+        </div>
+        <div>
+          <div class="step-num">3</div>
+          <h3>Activate & Spend</h3>
+          <p style="color:var(--muted);font-size:0.95rem;margin-top:8px;">Receive virtual card access and physical card options once the program is live and you are approved.</p>
+        </div>
+        <div>
+          <div class="step-num">4</div>
+          <h3>Earn & Control</h3>
+          <p style="color:var(--muted);font-size:0.95rem;margin-top:8px;">Cash rewards and full account controls become available through the app after activation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Network / Infrastructure (secondary) -->
+  <section class="section" id="network">
+    <div class="container">
+      <h2 class="section-title">Powered by the OCC Network</h2>
+      <p class="section-sub">
+        The card is the everyday product.<br>
+        The infrastructure is what makes it reliable, compliant, and future-ready.
+      </p>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <h3>Partner banks</h3>
+          <p>Banking and card issuance will be provided by regulated U.S. partner banks once agreements are finalized.</p>
+        </div>
+        <div class="benefit-card">
+          <h3>Program manager model</h3>
+          <p>OneCoinChain Corporation acts as the distribution and experience layer — focused on the customer relationship.</p>
+        </div>
+        <div class="benefit-card">
+          <h3>Stablecoin & digital settlement</h3>
+          <p>Designed for modern rails. Optional stablecoin settlement and cross-border capabilities are planned for future phases.</p>
+        </div>
+        <div class="benefit-card">
+          <h3>Compliance first</h3>
+          <p>Built with regulatory clarity from day one. Transparent structure and clear disclosures are core requirements.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust bar -->
+  <div class="trust-bar">
+    <div class="container">
+      <p>OneCoinChain Corporation is a financial technology company, not a bank.<br>
+      Card and banking services will be provided by regulated partner banks once the program is activated.</p>
+      <div class="partners">
+        <span>Partner Bank Network</span>
+        <span>•</span>
+        <span>Network Partners</span>
+        <span>•</span>
+        <span>U.S. Registered</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final CTA -->
+  <section class="section" id="apply" style="text-align:center;">
+    <div class="container">
+      <h2 class="section-title">Be among the first</h2>
+      <p class="section-sub">Request information to receive updates when the OCC Rewards Card program opens under bank sponsorship.</p>
+      <a href="#" class="btn-primary" style="display:inline-block;">Request Information</a>
+      <p style="margin-top:24px;font-size:0.85rem;color:var(--muted);">Program details, including fees and eligibility, will be finalized with partner banks. Terms will apply.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="logo" style="margin-bottom:16px;">OCC <span>Rewards</span></div>
+          <p>A proposed financial product of OneCoinChain Corporation.</p>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <a href="#card">The Card</a>
+          <a href="#benefits">Benefits</a>
+          <a href="#how">How it works</a>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <a href="https://www.cryptoocc.com/" target="_blank">About OCC</a>
+          <a href="#network">Network</a>
+          <a href="#">Partners</a>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+          <a href="#">Disclosures</a>
+        </div>
+      </div>
+      <div class="disclaimer">
+        OneCoinChain Corporation is a financial technology company and is not a bank. The OCC Rewards Card is a proposed product under development. Banking and card services will be provided by regulated partner banks once formal agreements are in place. This website does not constitute an offer to issue cards or provide banking services. All features, benefits, fees, eligibility criteria, and timelines are subject to change and final partner bank and regulatory approval. No offer is being made in any jurisdiction where such offer would be unlawful.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
